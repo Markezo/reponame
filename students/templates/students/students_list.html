@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
 <html lang="uk">
 
     <head>
@@ -11,7 +13,7 @@
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
             integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
             crossorigin="anonymous">
-          <link rel="stylesheet" href="./css/main.css">
+          <link rel="stylesheet" href="static/css/main.css">
     </head>
 
     <body>
@@ -82,12 +84,13 @@
                   </tr>
                 </thead>
                 <tbody>
+              {% for student in students %}
                   <tr>
-                    <td>1</td>
-                    <td><img  src="./img/Homer.JPG" height="30"  width="30" class="rounded-circle"></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 1 %}">Корост</a></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 1 %}">Андрій</a></td>
-                    <td>2123</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td><img  src="{% static student.image %}" height="30"  width="30" class="rounded-circle"></td>
+                    <td><a title="Редагувати" href="{% url "students_edit" student.id %}">  {{ student.last_name }} </a></td>
+                    <td><a title="Редагувати" href="{% url "students_edit" student.id %}">{{ student.first_name }}</a></td>
+                    <td>{{ student.ticket}}</td>
                     <td>
                       <!-- Example single danger button -->
                       <div class="btn-group">
@@ -95,56 +98,17 @@
                           Дія
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/journal/1">Відвідування</a>
-                          <a class="dropdown-item" href="{% url "students_edit" 1 %}">Редагувати</a>
-                          <a class="dropdown-item" href="{% url "students_delete" 1 %}">Видалити</a>
+                          <a class="dropdown-item" href="/journal/student.id">Відвідування</a>
+                          <a class="dropdown-item" href="{% url "students_edit" student.id %}">Редагувати</a>
+                          <a class="dropdown-item" href="{% url "students_delete" student.id %}">Видалити</a>
 
                         </div>
                       </div>
                       </td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    <td><img height="30"  width="30" src="./img/li.JPG" class="rounded-circle"></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 2 %}">Лимонченко</a></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 2 %}">Лимон</a></td>
-                    <td>254</td>
-                    <td>
-                      <!-- Example single danger button -->
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Дія
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/journal/2">Відвідування</a>
-                          <a class="dropdown-item" href="{% url "students_edit" 2 %}">Редагувати</a>
-                          <a class="dropdown-item" href="{% url "students_delete" 2 %}">Видалити</a>
 
-                        </div>
-                      </div>
-                      </td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td><img height="30"  width="30" src="./img/we.JPG" class="rounded-circle"></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 3 %}">Соня</a></td>
-                    <td><a title="Редагувати" href="{% url "students_edit" 3 %}">Ми</a></td>
-                    <td>123</td>
-                    <td>
-                      <!-- Example single danger button -->
-                      <div class="btn-group">
-                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Дія
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/journal/3">Відвідування</a>
-                          <a class="dropdown-item" href="{% url "students_edit" 3 %}">Редагувати</a>
-                          <a class="dropdown-item" href="{% url "students_delete" 3 %}">Видалити</a>
-
-                        </div>
-                      </div>
-                      </td>
-                  </tr>
+          
+                {% endfor %}
                  </tbody>
                </table>
               <!-- End Students Listing -->
